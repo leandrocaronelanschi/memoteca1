@@ -4,8 +4,7 @@ const api = {
       const pensamentos = await fetch("http://localhost:3000/pensamentos");
       const responsePensamentos = await pensamentos.json();
       return responsePensamentos;
-
-      console.log(responsePensamentos);
+      
     } catch (error) {
       alert("Erro ao buscar pensamentos!");
       throw error;

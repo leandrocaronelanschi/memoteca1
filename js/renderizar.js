@@ -8,9 +8,11 @@ async function renderizarPensamentos() {
 const pensamento = await api.buscarPensamentos();
 console.log(pensamento);
 
+const ul = document.getElementById('lista-pensamentos');
+ul.innerHTML = '';
+
 pensamento.forEach ((pensamento) => {
 
-const ul = document.getElementById('lista-pensamentos');
 
 const listaPensamentos = document.createElement('li');
 listaPensamentos.classList.add('li-pensamento');
@@ -32,6 +34,8 @@ const pensamentoAutoria = document.createElement('div');
 pensamentoAutoria.classList.add('pensamento-autoria');
 pensamentoAutoria.innerText = pensamento.autoria;
 listaPensamentos.appendChild(pensamentoAutoria);
+
+
 const idPensamnto = document.createElement("div");
 idPensamnto.id = 'id-pensamento';
 idPensamnto.style.display = 'none';
@@ -60,7 +64,11 @@ const iconeExcluir = document.createElement('img');
 iconeExcluir.classList.add('botao-excluir');
 iconeExcluir.src = "/3781-javascript/assets/imagens/icone-excluir.png";
 iconeExcluir.alt = 'Icone excluir';
-iconeExcluir.addEventListener('click', () => deletarPensamento(pensamento.id));
+iconeExcluir.addEventListener('click', async () => { 
+    await deletarPensamento(pensamento.id);
+    await renderizarPensamentos();
+
+})
 listaPensamentos.appendChild(iconeExcluir);    
 
 

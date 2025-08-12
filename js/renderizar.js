@@ -1,5 +1,7 @@
 
 import api from './api.js'
+import deletarPensamento from './deletarpensamento.js';
+
 
 async function renderizarPensamentos() {
     try {
@@ -30,18 +32,39 @@ const pensamentoAutoria = document.createElement('div');
 pensamentoAutoria.classList.add('pensamento-autoria');
 pensamentoAutoria.innerText = pensamento.autoria;
 listaPensamentos.appendChild(pensamentoAutoria);
+const idPensamnto = document.createElement("div");
+idPensamnto.id = 'id-pensamento';
+idPensamnto.style.display = 'none';
+idPensamnto.innerText = pensamento.id;
+listaPensamentos.appendChild(idPensamnto)
 
 const iconeEditar = document.createElement('img');
 iconeEditar.src = "/3781-javascript/assets/imagens/icone-editar.png";
 iconeEditar.alt = 'Icone aspas';
 iconeEditar.classList.add('botao-editar');
+iconeEditar.addEventListener('click', () => api.editarPensamento());
+
 listaPensamentos.appendChild(iconeEditar);
+
+
+const idEditar = document.getElementById('id-pensamento').innerText;
+const conteudoEditar = document.getElementById('pensamento-conteudo').innerText;
+const autoriaEditar = document.getElementById('pensamento-autoria').innerText;
+const dadosEditar = {
+    conteudo: conteudoEditar,
+    autoria: autoriaEditar 
+}
+//iconeEditar.addEventListener('click', () => api.editarPensamento(idEditar, dadosEditar));
 
 const iconeExcluir = document.createElement('img');
 iconeExcluir.classList.add('botao-excluir');
 iconeExcluir.src = "/3781-javascript/assets/imagens/icone-excluir.png";
 iconeExcluir.alt = 'Icone excluir';
-listaPensamentos.appendChild(iconeExcluir);
+iconeExcluir.addEventListener('click', () => deletarPensamento(pensamento.id));
+listaPensamentos.appendChild(iconeExcluir);    
+
+
+
 
 })
 
@@ -53,3 +76,6 @@ listaPensamentos.appendChild(iconeExcluir);
 }
 
 renderizarPensamentos();
+
+
+export default renderizarPensamentos;
